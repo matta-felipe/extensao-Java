@@ -9,6 +9,11 @@ import java.util.*;
 import java.util.logging.*;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 
 public class ParaOndeFoi {
     private static final Logger LOGGER = Logger.getLogger(ParaOndeFoi.class.getName());
@@ -38,6 +43,42 @@ public class ParaOndeFoi {
         }
     }
 
-class Empresa {}
+class Empresa {
+    private String endereco;
+    private String numero;
+    private String cep;
+    private Coordenada Coordenada;
+
+    public Empresa(String endereco, String numero, String cep) {
+        this.endereco = endereco;
+        this.numero = numero;
+        this.cep = cep;
+    }
+
+    public String getFullAdress() {
+        return endereco + ", " + numero + ", " + cep;
+    }
+
+    public void setCoordenada(Coordenada coordenada) {
+        this.coordenada = coordenada;
+    }
+
+    public Coordenada getCoordenada() {
+        return coordenada;
+    }
+
+    @Override
+    public String toString() {
+        return "Empresa{" +
+                "endereco='" + endereco + '\'' +
+                ", numero='" + numero + '\'' +
+                ", cep='" + cep + '\'' +
+                ", coordenada=" + coordenada +
+                '}';
+    }
+}
+
+
+
 
 class Coordenada {}
