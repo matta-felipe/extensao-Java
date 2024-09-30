@@ -1,4 +1,3 @@
-
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -12,6 +11,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+
 
 public class ParaOndeFoi {
     private static final Logger LOGGER = Logger.getLogger(ParaOndeFoi.class.getName());
