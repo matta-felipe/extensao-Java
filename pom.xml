@@ -46,7 +46,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>extensao.para-onde-foi</mainClass> 
+                            <mainClass>para-onde-foi</mainClass> 
                         </manifest>
                     </archive>
                 </configuration>

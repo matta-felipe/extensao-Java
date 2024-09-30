@@ -1,6 +1,9 @@
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.logging.*;
@@ -145,27 +148,31 @@ public class ParaOndeFoi {
         if (coordenadaCache.containsKey(address)) {
             return coordenadaCache.get(address);
         }
-        
+    
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-
-        String encodedAddress = java.net.URLEncoder.encode(address, StandardCharsets.UTF_8);
+    
+        String encodedAddress;
+        encodedAddress = URLEncoder.encode(address, StandardCharsets.UTF_8);
+ 
+    
         String urlString = "https://maps.googleapis.com/maps/api/geocode/json?address=" + encodedAddress + "&key=" + API_KEY;
-
+    
         try {
-            URL url = new URL(urlString);
+            URI uri = new URI(urlString);
+            URL url = uri.toURL(); // This will not throw IOException
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
-
+    
             if (connection.getResponseCode() == 200) {
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
                     String response = reader.lines().collect(Collectors.joining());
                     ObjectMapper mapper = new ObjectMapper();
                     JsonNode root = mapper.readTree(response);
-                    
+    
                     if (root.has("results") && root.get("results").size() > 0) {
                         JsonNode location = root.get("results").get(0).get("geometry").get("location");
                         double lat = location.get("lat").asDouble();
@@ -176,12 +183,15 @@ public class ParaOndeFoi {
                     }
                 }
             }
+        } catch (URISyntaxException e) {
+            LOGGER.log(Level.SEVERE, "Invalid URI", e);
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Error getting coordinates", e);
         }
-
+    
         return null;
     }
+
 
     private static void updateProgress(double progress, int current, int total) {
         System.out.printf("Processando: %d/%d endereços (%.2f%%)\n", current, total, progress * 100);
