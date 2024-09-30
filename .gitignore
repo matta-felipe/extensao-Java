@@ -8,6 +8,9 @@
 # Log file
 *.log
 
+# .env file
+*.env
+
 # BlueJ files
 *.ctxt
 
