@@ -163,7 +163,7 @@ public class ParaOndeFoi {
     
         try {
             URI uri = new URI(urlString);
-            URL url = uri.toURL(); // This will not throw IOException
+            URL url = uri.toURL(); 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
     
